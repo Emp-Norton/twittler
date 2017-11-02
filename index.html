@@ -2,26 +2,32 @@
 <html>
   <head>
     <script src="jquery.js"></script>
+    <script src="behavior.js"></script>
     <script src="data_generator.js"></script>
     <link rel="stylesheet" type="text/css" href ="twittler.css"/>
   </head>
   <body>
 
     <header> 
-      <section> Twittler </section>
+      <section> <h2> Twittler </h2></section>
     </header>
   
   <div class = "content-well">
-    <div class = "tweet-feed" id = "tf">
-        <section> tweet feed <br></section>
+      <div class = "tweet-feed" style="text-align: center;">
+      </div>
     </div>
   
     <aside>
-      <section>aside <br></section>
+      <section> User McUserface <br></section>
+      <hr>
+      <h3> Users you might be interested in </h3>
+      <div class = "visited">
+      </div>
     </aside>
   </div>
 
     <script>
+      var visitedUsers = [];
       var getTweets = setInterval(getTweets, 1000);
       var $tweetfeed = $('.tweet-feed');
       var tweetList = {};
@@ -30,94 +36,13 @@
         while(index <= streams.home.length - 1){
           var tweet = streams.home[index];
           tweet.seen = true;
-          var tweetElement = $(`<p><t>@${tweet.user} : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></t>`);
-          tweetElement.appendTo($tweetfeed);
+          tweet.index = index;
+          var tweetElement = createTweetElement(tweet);
+          $tweetfeed.prepend(tweetElement);
           index += 1;
         }
-        
       });
 
-      function getTweets(){
-        streams.home.forEach(function(tweet, idx){
-          if (!tweet.hasOwnProperty("seen")){
-            tweet.seen = false;
-            tweet.index = idx;
-            tweetList[idx] = tweet;
-            postTweet(tweet)
-          }
-        })
-      }
-
-      function showUserTweets(user){
-        clearInterval(getTweets); 
-        $tweetfeed.html('');
-        var userTweets = getUserTweets(user);
-        userTweets.forEach(function(tweet){
-          var tweetElement = $(`<p><t>@${tweet.user} : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></t>`);
-          tweetElement.appendTo($tweetfeed);
-        });
-      }
-
-      function getUserTweets(user){
-        return streams.users[user];
-      }
-
-      function postTweet(tweet){
-        var tweetElement = $(`<p><t>@${tweet.user} : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></t>`);
-        tweet.seen = true;
-        $('.tweet-feed').height('+=63');
-        tweetElement.appendTo($tweetfeed); // use before here?
-      }
-
-      function getTime(creationTime){
-        var currentTime = Date.now();
-        var elapsed = currentTime - creationTime
-        return formatTime(elapsed)
-      }
-
-      function formatTime(seconds){
-        if (seconds < 60) return `${seconds} seconds`
-        var hr;
-        var min;
-        var str = [];
-        while (seconds >= 3600){
-          hr = parseInt(seconds / 3600);
-          seconds = seconds % 3600;
-        }
-        while (seconds >= 60){
-          min = parseInt(seconds / 60);
-          seconds = seconds % 60;
-        }
-  
-        [hr, min, seconds].forEach(function(timeElement, place){
-          switch (place){
-            case 0:
-              if (timeElement == 1){
-                str.push(`${timeElement} hour`)
-              } else if (timeElement > 1) {
-                str.push(`${timeElement} hours`)
-              }
-              break;
-            case 1:
-              if (timeElement == 1){
-              str.push(`${timeElement} minute`)
-              } else if (timeElement > 1){
-                str.push(`${timeElement} minutes`)
-              }
-              break;
-            case 2:
-              if (timeElement == 1){
-                str.push(`${timeElement} second`)
-              } else if (timeElement > 1){
-                str.push(`${timeElement} seconds`)
-              }
-              break;
-          } 
-        });
-        return str.join(" ")
-      }
-      
-      
 
     </script>
   </body>
