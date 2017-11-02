@@ -1,0 +1,35 @@
+code {
+  background: blue;
+  border-radius: 6px;
+  color: #fff;
+  display: block;
+  font: 14px/24px "Source Code Pro", Inconsolata, "Lucida    Console", Terminal, "Courier New", Courier;
+  padding: 24px 14px;
+  text-align: center;
+}
+header,
+section,
+aside {
+  margin: 0 1.5% 24px 1.5%;
+}
+
+aside {
+  width: 25%;
+  height: 480px;
+  background-color: blue;
+  border-radius: 6px;
+  float: left;
+}
+
+.tweet-feed {
+  float: right;
+  margin-right: 25px;
+  width: 70%;
+  height: 480px;
+  background-color: blue;
+  border-radius: 6px;
+  margin-bottom: 5%;
+}
+
+.content-well {
+}
