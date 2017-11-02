@@ -3,7 +3,7 @@ section {
   border-radius: 6px;
   color: #fff;
   display: block;
-  font: 14px/24px "Source Code Pro", Inconsolata, "Lucida    Console", Terminal, "Courier New", Courier;
+  font: 14px/24px "Source Code Pro", Inconsolata, "Lucida  Console", Terminal, "Courier New", Courier;
   padding: 24px 14px;
   text-align: center;
 }
@@ -12,16 +12,21 @@ aside {
   margin: 0 1.5% 24px 1.5%;
 }
 
+h2 {
+
+}
+
 aside {
   width: 25%;
   height: 480px;
   background-color: blue;
   border-radius: 6px;
   float: left;
+  text-align: center;
 }
 
 p {
-	color: red;
+	color: white;
 	padding: 5px;
 }
 
@@ -29,7 +34,7 @@ p {
 .tweet-feed {
   float: right;
   width: 70%;
-  height: 770px;
+  height: 750px;
   background-color: blue;
   border-radius: 6px;
   margin-bottom: 5%;
