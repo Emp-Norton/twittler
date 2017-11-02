@@ -20,15 +20,18 @@
     <aside>
       <section> User McUserface <br></section>
       <hr>
-      <h3> Users you might be interested in </h3>
+      <h3> Users you have visited:</h3>
       <div class = "visited">
       </div>
+      <div id="restoreButton"><button onclick="restoreFeed()"> Restore my feed </button></div>
     </aside>
+
   </div>
 
     <script>
+      var start = Date.now()
+      var update;
       var visitedUsers = [];
-      var getTweets = setInterval(getTweets, 1000);
       var $tweetfeed = $('.tweet-feed');
       var tweetList = {};
       $(document).ready(function(){
@@ -37,10 +40,12 @@
           var tweet = streams.home[index];
           tweet.seen = true;
           tweet.index = index;
+          tweetList[index] = tweet;
           var tweetElement = createTweetElement(tweet);
           $tweetfeed.prepend(tweetElement);
           index += 1;
         }
+        update = setInterval(getTweets, 3000)
       });
 
 
