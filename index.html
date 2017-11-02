@@ -8,17 +8,16 @@
   <body>
 
     <header> 
-      <code> Twittler </code>
+      <section> Twittler </section>
     </header>
   
   <div class = "content-well">
     <div class = "tweet-feed" id = "tf">
-        <code> tweet feed <br></code>
-
+        <section> tweet feed <br></section>
     </div>
   
     <aside>
-      <code>aside <br></code>
+      <section>aside <br></section>
     </aside>
   </div>
 
@@ -30,7 +29,7 @@
         while(index <= streams.home.length - 1){
           var tweet = streams.home[index];
           tweet.seen = true;
-          var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}</p>`);
+          var tweetElement = $(`<p><t>@${tweet.user} : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></t>`);
           tweetElement.appendTo($tweetfeed);
           index += 1;
         }
@@ -50,14 +49,61 @@
         })
       }
 
-
       function postTweet(tweet){
-        var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}</p>`);
+        var tweetElement = $(`<p><t>@${tweet.user} : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></t>`);
         tweet.seen = true;
-        $('.tweet-feed').height('+=35');
+        $('.tweet-feed').height('+=63');
         tweetElement.appendTo($tweetfeed); // use before here?
       }
 
+      function getTime(creationTime){
+        var currentTime = Date.now();
+        var elapsed = currentTime - creationTime
+        return formatTime(elapsed)
+      }
+      function formatTime(seconds){
+        if (seconds < 60) return `${seconds} seconds`
+        var hr;
+        var min;
+        var str = [];
+        while (seconds >= 3600){
+          hr = parseInt(seconds / 3600);
+          seconds = seconds % 3600;
+        }
+        while (seconds >= 60){
+          min = parseInt(seconds / 60);
+          seconds = seconds % 60;
+        }
+  
+        [hr, min, seconds].forEach(function(timeElement, place){
+          switch (place){
+            case 0:
+              if (timeElement == 1){
+                str.push(`${timeElement} hour`)
+              } else if (timeElement > 1) {
+                str.push(`${timeElement} hours`)
+              }
+              break;
+            case 1:
+              if (timeElement == 1){
+              str.push(`${timeElement} minute`)
+              } else if (timeElement > 1){
+                str.push(`${timeElement} minutes`)
+              }
+              break;
+            case 2:
+              if (timeElement == 1){
+                str.push(`${timeElement} second`)
+              } else if (timeElement > 1){
+                str.push(`${timeElement} seconds`)
+              }
+              break;
+          } 
+        });
+        return str.join(" ")
+      }
+      
+      
 
     </script>
   </body>
