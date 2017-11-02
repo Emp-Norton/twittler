@@ -12,7 +12,7 @@
     </header>
   
   <div class = "content-well">
-    <div class = "tweet-feed">
+    <div class = "tweet-feed" id = "tf">
         <code> tweet feed <br></code>
 
     </div>
@@ -26,16 +26,16 @@
       var $tweetfeed = $('.tweet-feed');
       var tweetList = {};
       $(document).ready(function(){
-        var index = streams.home.length - 1;
-        while(index >= 0){
+        var index = 0;
+        while(index <= streams.home.length - 1){
           var tweet = streams.home[index];
-          var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}<p>`);
+          tweet.seen = true;
+          var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}</p>`);
           tweetElement.appendTo($tweetfeed);
-          index -= 1;
+          index += 1;
         }
         setInterval(function(){
           getTweets();
-          updateFeed();
         }, 1000);
       });
 
@@ -43,24 +43,18 @@
         streams.home.forEach(function(tweet, idx){
           if (!tweet.hasOwnProperty("seen")){
             tweet.seen = false;
+            tweet.index = idx;
             tweetList[idx] = tweet;
             postTweet(tweet)
           }
         })
       }
 
-      function updateFeed(){
-        for (var tweet in tweetList){
-          if (tweet.seen === false){
-            console.log(`posting: ${tweet}`)
-            postTweet(tweet)
-          }
-        }
-      }
 
       function postTweet(tweet){
-        var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}<p>`);
+        var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}</p>`);
         tweet.seen = true;
+        $('.tweet-feed').height('+=35');
         tweetElement.appendTo($tweetfeed); // use before here?
       }
 
