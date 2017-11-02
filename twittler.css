@@ -1,4 +1,4 @@
-code {
+section {
   background: blue;
   border-radius: 6px;
   color: #fff;
@@ -8,7 +8,6 @@ code {
   text-align: center;
 }
 header,
-section,
 aside {
   margin: 0 1.5% 24px 1.5%;
 }
@@ -21,15 +20,23 @@ aside {
   float: left;
 }
 
+p {
+	color: red;
+	padding: 5px;
+}
+
+
 .tweet-feed {
   float: right;
-  margin-right: 25px;
   width: 70%;
-  height: 480px;
+  height: 770px;
   background-color: blue;
   border-radius: 6px;
   margin-bottom: 5%;
 }
 
+
+
 .content-well {
+	display: inline;
 }
