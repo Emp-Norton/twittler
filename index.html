@@ -22,6 +22,7 @@
   </div>
 
     <script>
+      var getTweets = setInterval(getTweets, 1000);
       var $tweetfeed = $('.tweet-feed');
       var tweetList = {};
       $(document).ready(function(){
@@ -33,9 +34,7 @@
           tweetElement.appendTo($tweetfeed);
           index += 1;
         }
-        setInterval(function(){
-          getTweets();
-        }, 1000);
+        
       });
 
       function getTweets(){
@@ -47,6 +46,20 @@
             postTweet(tweet)
           }
         })
+      }
+
+      function showUserTweets(user){
+        clearInterval(getTweets); 
+        $tweetfeed.html('');
+        var userTweets = getUserTweets(user);
+        userTweets.forEach(function(tweet){
+          var tweetElement = $(`<p><t>@${tweet.user} : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></t>`);
+          tweetElement.appendTo($tweetfeed);
+        });
+      }
+
+      function getUserTweets(user){
+        return streams.users[user];
       }
 
       function postTweet(tweet){
@@ -61,6 +74,7 @@
         var elapsed = currentTime - creationTime
         return formatTime(elapsed)
       }
+
       function formatTime(seconds){
         if (seconds < 60) return `${seconds} seconds`
         var hr;
