@@ -42,7 +42,7 @@ var generateRandomTweet = function(){
   var tweet = {};
   tweet.user = randomElement(users);
   tweet.message = randomMessage();
-  tweet.created_at = new Date();
+  tweet.created_at = Date.now();
   addTweet(tweet);
 };
 
