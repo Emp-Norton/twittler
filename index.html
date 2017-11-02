@@ -3,24 +3,67 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" type="text/css" href ="twittler.css"/>
   </head>
   <body>
+
+    <header> 
+      <code> Twittler </code>
+    </header>
+  
+  <div class = "content-well">
+    <div class = "tweet-feed">
+        <code> tweet feed <br></code>
+
+    </div>
+  
+    <aside>
+      <code>aside <br></code>
+    </aside>
+  </div>
+
     <script>
-
+      var $tweetfeed = $('.tweet-feed');
+      var tweetList = {};
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
-
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}<p>`);
+          tweetElement.appendTo($tweetfeed);
           index -= 1;
         }
-
+        setInterval(function(){
+          getTweets();
+          updateFeed();
+        }, 1000);
       });
+
+      function getTweets(){
+        streams.home.forEach(function(tweet, idx){
+          if (!tweet.hasOwnProperty("seen")){
+            tweet.seen = false;
+            tweetList[idx] = tweet;
+            postTweet(tweet)
+          }
+        })
+      }
+
+      function updateFeed(){
+        for (var tweet in tweetList){
+          if (tweet.seen === false){
+            console.log(`posting: ${tweet}`)
+            postTweet(tweet)
+          }
+        }
+      }
+
+      function postTweet(tweet){
+        var tweetElement = $(`<p>@${tweet.user} : ${tweet.message}<p>`);
+        tweet.seen = true;
+        tweetElement.appendTo($tweetfeed); // use before here?
+      }
+
 
     </script>
   </body>
