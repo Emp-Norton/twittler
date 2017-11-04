@@ -18,7 +18,6 @@ function restoreFeed(){
 function getTweets(){
   $tweetfeed.children().remove()
   streams.home.forEach(function(tweet, idx){
-    $tweetfeed.height(`${streams.home.length * 63}`);
     tweet.index = idx;
     postTweet(tweet);
   })
