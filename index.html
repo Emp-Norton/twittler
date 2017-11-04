@@ -18,23 +18,28 @@
     </div>
   
     <aside>
-      <section> User McUserface <br></section>
+      <section> <h3 id = "username"> </h3></section>
       <hr>
       <h3> Users you have visited:</h3>
-      <div class = "visited">
+      <div class = "visited"></div>
+      <div id = "restoreButton"><button onclick = "restoreFeed()"> Restore my feed </button></div>
+      <div class = "tweetBar">
+        <form id = "tweetForm">
+          <input type = "text" placeholder = "Write tweet: " class = "userTweet"></input>  <button class = "submitTweet" onclick = "writeTweet($('.userTweet').val()) ; this.form.reset();">Tweet it!</button>
+        </form>
       </div>
-      <div id="restoreButton"><button onclick="restoreFeed()"> Restore my feed </button></div>
     </aside>
+  </body>
 
   </div>
 
     <script>
-      var start = Date.now()
       var update;
       var visitedUsers = [];
       var $tweetfeed = $('.tweet-feed');
       var tweetList = {};
       $(document).ready(function(){
+        setUser();
         var index = 0;
         while(index <= streams.home.length - 1){
           var tweet = streams.home[index];
@@ -47,8 +52,6 @@
         }
         update = setInterval(getTweets, 3000)
       });
-
-
     </script>
   </body>
 </html>
