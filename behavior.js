@@ -46,7 +46,7 @@ function getTweetsByTag(tag){
   })
   return taggedTweets
 }
-
+// add "tags you have viewed" section to aside after a tag has been clicked. Remove underline for tagged posts. 
 function showTweetsByTag(tag){
   clearInterval(update); 
   cleanTweetFeed();
@@ -58,7 +58,8 @@ function showTweetsByTag(tag){
   $('#restoreButton').css('visibility', 'visible')
 }
 
-function showUserTweets(user){ // this is a nightmare, clean it up.
+// when viewing user tweets, add header indicating such. Same for keywords / tags. Doubly so for tweets by user X with tags Y. 
+function showUserTweets(user){ // this is a nightmare, clean it up. 
   updateVisitedUsers(user);
   clearInterval(update); 
   cleanTweetFeed();
