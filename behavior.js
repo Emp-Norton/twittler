@@ -1,3 +1,10 @@
+function setUser(){
+  window.visitor = prompt("Please enter your username: ")
+  if (streams.users.hasOwnProperty(visitor)){
+  	window.visitor = prompt("Sorry, that username is already taken. Please provide an alternative: ")
+  }
+  $('#username').html(`<a href = "#" onclick = "showUserTweets('${visitor}')">${visitor}</a>`)
+}
 function restoreFeed(){   
   cleanTweetFeed();
   streams.home.forEach(function(tweet, idx){
@@ -18,7 +25,7 @@ function getTweets(){
 }
 
 function updateVisitedUsers(user){
-  if (!visitedUsers.includes(user)){
+  if (!visitedUsers.includes(user) && user != visitor){
     visitedUsers.push(user);
     $('.visited').html('');
     visitedUsers.forEach(user => $('.visited').append(`<a href="#" onclick="showUserTweets('${user}')"> ${user} </a><br>`));
@@ -52,11 +59,6 @@ function postTweet(tweet){
   $tweetfeed.prepend(tweetElement); 
 }
 
-function getTime(creationTime){
-  var currentTime = Date.now();
-  var elapsed = currentTime - creationTime;
-  return formatTime(parseInt(elapsed / 1000))
-}
 
 function createTweetElement(tweet, idx){
   var parity = idx || tweet.index
@@ -66,6 +68,12 @@ function createTweetElement(tweet, idx){
     var tweetElement = $(`<div class="odd"><p><strong><a href="#" onclick="showUserTweets('${tweet.user}')">@${tweet.user}</strong></a> : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></div>`);
   }
   return tweetElement
+}
+
+function getTime(creationTime){
+  var currentTime = Date.now();
+  var elapsed = currentTime - creationTime;
+  return formatTime(parseInt(elapsed / 1000))
 }
 
 function formatTime(seconds){
