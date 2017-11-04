@@ -5,6 +5,12 @@ function setUser(){
   }
   $('#username').html(`<a href = "#" onclick = "showUserTweets('${visitor}')">${visitor}</a>`)
 }
+
+function cleanTweetFeed(){
+  $tweetfeed.children().remove();
+  $tweetfeed.html('');
+}
+
 function restoreFeed(){   
   cleanTweetFeed();
   streams.home.forEach(function(tweet, idx){
@@ -12,7 +18,7 @@ function restoreFeed(){
     $tweetfeed.prepend(tweetElement)
   });
   $('#restoreButton').css('visibility', 'hidden')
-  update = setInterval(getTweets, 3300)
+  update = setInterval(getTweets, 3000)
 }
 
 function getTweets(){
@@ -31,9 +37,25 @@ function updateVisitedUsers(user){
   }
 }
 
-function cleanTweetFeed(){
-  $tweetfeed.children().remove();
-  $tweetfeed.html('');
+function getTweetsByTag(tag){
+  var taggedTweets = [];
+  streams.home.forEach(function(tweet){
+    if (tweet.tag === tag){
+      taggedTweets.push(tweet);
+    }
+  })
+  return taggedTweets
+}
+
+function showTweetsByTag(tag){
+  clearInterval(update); 
+  cleanTweetFeed();
+  var taggedTweetsFound = getTweetsByTag(tag);
+  taggedTweetsFound.forEach(function(tweet, index){
+    var tweetElement = createTweetElement(tweet, index);
+    tweetElement.appendTo($tweetfeed);
+  });
+  $('#restoreButton').css('visibility', 'visible')
 }
 
 function showUserTweets(user){ // this is a nightmare, clean it up.
@@ -62,9 +84,19 @@ function postTweet(tweet){
 function createTweetElement(tweet, idx){
   var parity = idx || tweet.index
   if (parity % 2 === 0){
-    var tweetElement = $(`<div class="even"><p><strong><a href="#" onclick="showUserTweets('${tweet.user}')">@${tweet.user}</strong></a> : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></div>`);
+    if (tweet.tag){
+      var tag = tweet.message.split(" ")[tweet.message.split(" ").length - 1];
+      var tweetElement = $(`<div class="even"><p><strong><a href="#" onclick="showUserTweets('${tweet.user}')">@${tweet.user}</strong></a> : <a href="#" onclick = "showTweetsByTag('${tag}')"> ${tweet.message}</a> <br> Created ${getTime(tweet.created_at)} ago.</p></div>`);   
+    } else {
+      var tweetElement = $(`<div class="even"><p><strong><a href="#" onclick="showUserTweets('${tweet.user}')">@${tweet.user}</strong></a> : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></div>`);
+    }
   } else {
+    if (tweet.tag){
+      var tag = tweet.message.split(" ")[tweet.message.split(" ").length - 1];
+      var tweetElement = $(`<div class="odd"><p><strong><a href="#" onclick="showUserTweets('${tweet.user}')">@${tweet.user}</strong></a> : <a href="#" onclick = "showTweetsByTag('${tag}')"> ${tweet.message}</a> <br> Created ${getTime(tweet.created_at)} ago.</p></div>`);   
+    } else {
     var tweetElement = $(`<div class="odd"><p><strong><a href="#" onclick="showUserTweets('${tweet.user}')">@${tweet.user}</strong></a> : ${tweet.message} <br> Created ${getTime(tweet.created_at)} ago.</p></div>`);
+    }
   }
   return tweetElement
 }
