@@ -1,12 +1,16 @@
-section {
-  background: blue;
+a {
+  color: white;
+}
+
+aside {
+  width: 25%;
+  height: 480px;
+  background-color: blue;
   border-radius: 6px;
-  color: #fff;
-  display: block;
-  font: 14px/24px  Inconsolata
-  padding: 24px 14px;
+  float: left;
   text-align: center;
 }
+
 header,
 aside {
   margin: 0 1.5% 24px 1.5%;
@@ -20,29 +24,23 @@ h3 {
   color: white;
 }
 
-aside {
-  width: 25%;
-  height: 480px;
-  background-color: blue;
-  border-radius: 6px;
-  float: left;
-  text-align: center;
-}
-
 p {
 	color: white;
 	padding: 5px;
 }
 
-a {
-  color: white;
+section {
+  background: blue;
+  border-radius: 6px;
+  color: #fff;
+  display: block;
+  font: 14px/24px  Inconsolata
+  padding: 24px 14px;
+  text-align: center;
 }
 
-.odd {
-  background-color: grey;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 5px;
+.content-well {
+	display: inline;
 }
 
 .even {
@@ -52,6 +50,21 @@ a {
   border-radius: 5px;
 }
 
+.odd {
+  background-color: grey;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+}
+
+.submitTweet {
+
+}
+
+.tweetBar {
+	padding: 15px;
+}
+
 .tweet-feed {
   float: right;
   width: 70%;
@@ -59,8 +72,8 @@ a {
   margin-bottom: 5%;
 }
 
-.content-well {
-	display: inline;
+.userTweet {
+	
 }
 
 #restoreButton {
