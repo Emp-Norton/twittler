@@ -9,11 +9,13 @@ aside {
   border-radius: 6px;
   float: left;
   text-align: center;
+  position: relative;
 }
 
 header,
 aside {
   margin: 0 1.5% 24px 1.5%;
+  padding: 15px;
 }
 
 h2 {
@@ -63,6 +65,9 @@ section {
 
 .tweetBar {
 	padding: 15px;
+	position: absolute; /* this won't work for dynamic resizing -- need to work on positioning */
+	top: 450px;
+	left: 65px;
 }
 
 .tweet-feed {
@@ -73,7 +78,7 @@ section {
 }
 
 .userTweet {
-	
+
 }
 
 #restoreButton {
