@@ -13,20 +13,14 @@ function cleanTweetFeed(){
 
 function restoreFeed(){   
   cleanTweetFeed();
-  streams.home.forEach(function(tweet, idx){
-    var tweetElement = createTweetElement(tweet, idx);
-    $tweetfeed.prepend(tweetElement)
-  });
-  $('#restoreButton').css('visibility', 'hidden')
-  update = setInterval(getTweets, 3000)
+  showUptoIndex(feedLength);
+  $('#restoreButton').css('visibility', 'hidden');
+  update = setInterval(getTweets, 3000);
 }
 
 function getTweets(){
   $tweetfeed.children().remove()
-  streams.home.forEach(function(tweet, idx){
-    tweet.index = idx;
-    postTweet(tweet);
-  })
+  showUptoIndex(feedLength);
 }
 
 function updateVisitedUsers(user){
@@ -75,12 +69,22 @@ function getUserTweets(user){
   return streams.users[user];
 }
 
-function postTweet(tweet){
+ function postTweet(tweet){
   tweet.seen = true;
   var tweetElement = createTweetElement(tweet);
-  $tweetfeed.prepend(tweetElement); 
+  $tweetfeed.prepend(tweetElement);
 }
 
+
+function showUptoIndex(index){
+  $tweetfeed.children().remove();
+  streams.home.forEach(function(tweet, idx){
+    tweet.index = idx
+    if (tweet.index  > streams.home.length - 11){
+      postTweet(tweet)
+    }
+  });
+}
 
 function createTweetElement(tweet, idx){
   var parity = idx || tweet.index
