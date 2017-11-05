@@ -34,18 +34,17 @@
   </div>
 
     <script>
+      var feedLength = 10;
       var update;
       var visitedUsers = [];
       var $tweetfeed = $('.tweet-feed');
-      var tweetList = {};
       $(document).ready(function(){
         setUser();
         var index = 0;
-        while(index <= streams.home.length - 1){
+        while(index < 10){
           var tweet = streams.home[index];
           tweet.seen = true;
           tweet.index = index;
-          tweetList[index] = tweet;
           var tweetElement = createTweetElement(tweet);
           $tweetfeed.prepend(tweetElement);
           index += 1;
