@@ -4,7 +4,7 @@ a {
 }
 
 aside {
-  width: 25%;
+  width: 20%;
   height: 480px;
   background-color: blue;
   border-radius: 6px;
@@ -17,6 +17,7 @@ header,
 aside {
   margin: 0 1.5% 24px 1.5%;
   padding: 15px;
+  display: block;
 }
 
 h2 {
@@ -53,6 +54,10 @@ section {
   border-radius: 5px;
 }
 
+.keywordsVisited {
+  
+}
+
 .odd {
   background-color: grey;
   border-style: solid;
@@ -66,10 +71,9 @@ section {
 
 .tweetBar {
 	padding: 15px;
-	position: absolute; /* this won't work for dynamic resizing -- need to work on positioning */
-	top: 450px;
-	left: 65px;
+	position: relative; 
 }
+
 
 .tweet-feed {
   float: right;
@@ -80,6 +84,11 @@ section {
 
 .userTweet {
 
+}
+
+.usersVisited {
+  display: block;
+  text-align: center;
 }
 
 #restoreButton {
