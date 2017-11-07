@@ -3,7 +3,7 @@ function setUser(){
   if (streams.users.hasOwnProperty(visitor)){
   	window.visitor = prompt("Sorry, that username is already taken. Please provide an alternative: ")
   }
-  $('#username').html(`<a href = "#" onclick = "showUserTweets('${visitor}')">${visitor}</a>`)
+  $('#username').html(`<a href="#" onclick="showUserTweets('${visitor}')">${visitor}</a>`)
 }
 
 function cleanTweetFeed(){
@@ -11,7 +11,8 @@ function cleanTweetFeed(){
   $tweetfeed.html('');
 }
 
-function restoreFeed(){   
+function restoreFeed(){  
+  $currentView.html('Tweets by all users.') 
   cleanTweetFeed();
   showUptoIndex(feedLength);
   $('#restoreButton').css('visibility', 'hidden');
@@ -26,8 +27,8 @@ function getTweets(){
 function updateVisitedUsers(user){
   if (!visitedUsers.includes(user) && user != visitor){
     visitedUsers.push(user);
-    $('.usersVisited').html('');
-    visitedUsers.forEach(user => $('.usersVisited').append(`<a href="#" onclick="showUserTweets('${user}')"> ${user} </a><br>`));
+    $('.usersVisited').children().remove();
+    visitedUsers.forEach(user => $('.usersVisited').append(`<a href="#" onclick="showUserTweets('${user}')"> @${user} </a><br>`));
   }
 }
 
@@ -44,13 +45,14 @@ function getTweetsByTag(tag){
 function updateVisitedTags(tag){
   if (!visitedKeywords.includes(tag)){
     visitedKeywords.push(tag);
-    $('.visitedKeywords').html('')
+    $('.keywordsVisited').children().remove();
     visitedKeywords.forEach(function(tag){
-      $('.visitedKeywords').append(`<a href="#" onclick="showTweetsByTag('${tag}')"> ${tag}a </a><br>`);
+      $('.keywordsVisited').append(`<a href="#" onclick="showTweetsByTag('${tag}')"> ${tag} </a><br>`);
     })
   }
 } 
 function showTweetsByTag(tag){
+  $currentView.html(`All tweets with ${tag} tag.`)
   updateVisitedTags(tag);
   clearInterval(update); 
   cleanTweetFeed();
@@ -61,18 +63,23 @@ function showTweetsByTag(tag){
   });
   $('#restoreButton').css('visibility', 'visible')
 }
-
-// when viewing user tweets, add header indicating such. Same for keywords / tags. Doubly so for tweets by user X with tags Y. 
-function showUserTweets(user){ // this is a nightmare, clean it up. 
+ 
+function showUserTweets(user){ 
+  $currentView.html(`All tweets by @${user}`);
   updateVisitedUsers(user);
   clearInterval(update); 
   cleanTweetFeed();
-  var userTweets = getUserTweets(user);
-  userTweets.forEach(function(tweet, index){
-    var tweetElement = createTweetElement(tweet, index);
-    tweetElement.appendTo($tweetfeed);
-  });
-  $('#restoreButton').css('visibility', 'visible')
+  if (getUserTweets(user) === undefined){
+    $tweetfeed.html(`@${user} doesn't currently have any tweets to display.`)
+    $('#restoreButton').css('visibility', 'visible');
+  } else {
+    var userTweets = getUserTweets(user);
+    userTweets.forEach(function(tweet, index){
+      var tweetElement = createTweetElement(tweet, index);
+      tweetElement.appendTo($tweetfeed);
+    });
+    $('#restoreButton').css('visibility', 'visible');
+  }
 }
 
 function getUserTweets(user){
@@ -80,7 +87,6 @@ function getUserTweets(user){
 }
 
  function postTweet(tweet){
-  tweet.seen = true;
   var tweetElement = createTweetElement(tweet);
   $tweetfeed.prepend(tweetElement);
 }
