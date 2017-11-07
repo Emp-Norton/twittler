@@ -15,14 +15,20 @@ aside {
 
 header,
 aside {
-  margin: 0 1.5% 24px 1.5%;
+  margin-top: 5px;
   padding: 15px;
   display: block;
 }
 
 h2 {
-
+  font-size: 55px;
 }
+
+h2 .subscript {
+  font-size: 20px;
+  margin-left: 55%;
+}
+
 
 h3 {
   color: white;
@@ -33,18 +39,16 @@ p {
 	padding: 5px;
 }
 
-section {
-  background: blue;
-  border-radius: 6px;
-  color: #fff;
-  display: block;
-  font: 14px/24px  Inconsolata
-  padding: 24px 14px;
+.banner {
+  width: 75%;
+  margin-left: 12%;
+  border-style: solid;
+  border-radius: 0% 35% 0% 35%;
+  border-color: grey;
+  border-width: 2px;
   text-align: center;
-}
-
-.content-well {
-	display: inline;
+  background-color: blue;
+  color: white;
 }
 
 .even {
@@ -55,7 +59,8 @@ section {
 }
 
 .keywordsVisited {
-  
+  display: block;
+  text-align: center;
 }
 
 .odd {
@@ -65,8 +70,13 @@ section {
   border-radius: 5px;
 }
 
-.submitTweet {
-
+.tweet-banner {
+  position: relative;
+  text-align: center;
+  background-color: lightblue;
+  border: solid 2px;
+  border-radius: 5px;
+  font-size: 25px;
 }
 
 .tweetBar {
@@ -76,14 +86,17 @@ section {
 
 
 .tweet-feed {
+  text-align: center;
   float: right;
   width: 70%;
   border-radius: 6px;
   margin-bottom: 5%;
+  margin-top: 5px;
+  font-size: 20px;
 }
 
-.userTweet {
-
+.tweet-well {
+  display: block;
 }
 
 .usersVisited {
