@@ -13,6 +13,7 @@
     </header>
   
   <div class = "content-well">
+    <div class="tweet-banner"></div>
       <div class = "tweet-feed" style="text-align: center;">
       </div>
     </div>
@@ -21,7 +22,9 @@
       <section> <h3 id = "username"> </h3></section>
       <hr>
       <h3> Users you have visited:</h3>
-      <div class = "visited"></div>
+      <div class = "usersVisited"></div>
+      <h3> Keywords you have visited:</h3>
+      <div class = "keywordsVisited"></div>
       <div id = "restoreButton"><button onclick = "restoreFeed()"> Restore my feed </button></div>
       <div class = "tweetBar">
         <form id = "tweetForm">
@@ -37,6 +40,7 @@
       var feedLength = 10;
       var update;
       var visitedUsers = [];
+      var visitedKeywords = [];
       var $tweetfeed = $('.tweet-feed');
       $(document).ready(function(){
         setUser();
