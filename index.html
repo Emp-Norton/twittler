@@ -9,26 +9,26 @@
   <body>
 
     <header> 
-      <section> <h2> Twittler </h2></section>
+      <div class="banner"> <h2><a href="#" onclick="restoreFeed()"> Twittler </a> <br><span class="subscript"> By James Jelenko for Hack Reactor Precourse</span></h2></div>
     </header>
   
-  <div class = "content-well">
-    <div class="tweet-banner"></div>
-      <div class = "tweet-feed" style="text-align: center;">
-      </div>
+
+    <div class="tweet-well">
+      <div class="tweet-banner">Currently viewing: <div class="currentView"></div></div>
+      <div class="tweet-feed"></div>
     </div>
   
     <aside>
-      <section> <h3 id = "username"> </h3></section>
+      <h3 id="username"> </h3>
       <hr>
       <h3> Users you have visited:</h3>
-      <div class = "usersVisited"></div>
+      <div class="usersVisited"></div>
       <h3> Keywords you have visited:</h3>
-      <div class = "keywordsVisited"></div>
-      <div id = "restoreButton"><button onclick = "restoreFeed()"> Restore my feed </button></div>
-      <div class = "tweetBar">
-        <form id = "tweetForm">
-          <input type = "text" placeholder = "Write tweet: " class = "userTweet"></input>  <button class = "submitTweet" onclick = "writeTweet($('.userTweet').val()) ; this.form.reset();">Tweet it!</button>
+      <div class="keywordsVisited"></div>
+      <div id="restoreButton"><button onclick="restoreFeed()"> Restore my feed </button></div>
+      <div class="tweetBar">
+        <form id="tweetForm">
+          <input type="text" placeholder="Write tweet: " class="userTweet"></input>  <button class="submitTweet" onclick="writeTweet($('.userTweet').val()) ; this.form.reset();">Make it so!</button>
         </form>
       </div>
     </aside>
@@ -42,12 +42,13 @@
       var visitedUsers = [];
       var visitedKeywords = [];
       var $tweetfeed = $('.tweet-feed');
+      var $currentView = $('.currentView')
       $(document).ready(function(){
         setUser();
+        $currentView.html('Most recent tweets by all users.')
         var index = 0;
         while(index < 10){
           var tweet = streams.home[index];
-          tweet.seen = true;
           tweet.index = index;
           var tweetElement = createTweetElement(tweet);
           $tweetfeed.prepend(tweetElement);
