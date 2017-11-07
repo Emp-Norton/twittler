@@ -26,8 +26,8 @@ function getTweets(){
 function updateVisitedUsers(user){
   if (!visitedUsers.includes(user) && user != visitor){
     visitedUsers.push(user);
-    $('.visited').html('');
-    visitedUsers.forEach(user => $('.visited').append(`<a href="#" onclick="showUserTweets('${user}')"> ${user} </a><br>`));
+    $('.usersVisited').html('');
+    visitedUsers.forEach(user => $('.usersVisited').append(`<a href="#" onclick="showUserTweets('${user}')"> ${user} </a><br>`));
   }
 }
 
@@ -40,8 +40,18 @@ function getTweetsByTag(tag){
   })
   return taggedTweets
 }
-// add "tags you have viewed" section to aside after a tag has been clicked. Remove underline for tagged posts. 
+
+function updateVisitedTags(tag){
+  if (!visitedKeywords.includes(tag)){
+    visitedKeywords.push(tag);
+    $('.visitedKeywords').html('')
+    visitedKeywords.forEach(function(tag){
+      $('.visitedKeywords').append(`<a href="#" onclick="showTweetsByTag('${tag}')"> ${tag}a </a><br>`);
+    })
+  }
+} 
 function showTweetsByTag(tag){
+  updateVisitedTags(tag);
   clearInterval(update); 
   cleanTweetFeed();
   var taggedTweetsFound = getTweetsByTag(tag);
